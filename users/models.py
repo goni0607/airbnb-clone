@@ -20,7 +20,7 @@ class User(AbstractUser):
     gender = models.CharField(
         choices=GENDER_CHOICE, default="Male", max_length=10, null=True, blank=True
     )
-    birthdate = models.DateField(null=True)
+    birthdate = models.DateField(null=True, blank=True)
     language = models.CharField(
         choices=LANGUAGE_CHOICE, max_length=2, null=True, blank=True
     )
