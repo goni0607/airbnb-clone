@@ -16,16 +16,12 @@ class User(AbstractUser):
         ("krw", "KRW"),
     ]
 
-    avatar = models.ImageField(null=True, blank=True)
+    avatar = models.ImageField(blank=True)
     gender = models.CharField(
-        choices=GENDER_CHOICE, default="Male", max_length=10, null=True, blank=True
+        choices=GENDER_CHOICE, default="Male", max_length=10, blank=True
     )
     birthdate = models.DateField(null=True, blank=True)
-    language = models.CharField(
-        choices=LANGUAGE_CHOICE, max_length=2, null=True, blank=True
-    )
-    currency = models.CharField(
-        choices=CURRENCY_CHOICE, max_length=3, null=True, blank=True
-    )
+    language = models.CharField(choices=LANGUAGE_CHOICE, max_length=2, blank=True)
+    currency = models.CharField(choices=CURRENCY_CHOICE, max_length=3, blank=True)
     is_superhost = models.BooleanField(default=False, verbose_name="Is Superhost")
-    bio = models.TextField(default="", blank=True)
+    bio = models.TextField(blank=True)
