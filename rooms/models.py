@@ -76,7 +76,7 @@ class Room(core_models.TimeStampedModel):
         return self.name
 
 
-class Photo(models.Model):
+class Photo(core_models.TimeStampedModel):
 
     """Photo Model Definition"""
 
