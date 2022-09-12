@@ -22,6 +22,9 @@ class Command(BaseCommand):
         number = options.get("number")
         all_users = user_models.User.objects.all()
         room_types = room_models.RoomType.objects.all()
+        amenities = room_models.Amenity.objects.all()
+        facilities = room_models.Facility.objects.all()
+        rules = room_models.HouseRule.objects.all()
         seeder = Seed.seeder()
         seeder.add_entity(
             room_models.Room,
@@ -47,5 +50,23 @@ class Command(BaseCommand):
                     room=room,
                     file=f"room_photos/{random.randint(1,31)}.webp",
                 )
+
+            # Seed amenities
+            for a in amenities:
+                magic_number = random.randint(1, 14)
+                if magic_number % 2 == 0:
+                    room.amenities.add(a)
+
+            # Seed Facilities
+            for f in facilities:
+                magic_number = random.randint(1, 14)
+                if magic_number % 2 == 0:
+                    room.facilities.add(f)
+
+            # Seed House Rules
+            for r in rules:
+                magic_number = random.randint(1, 14)
+                if magic_number % 2 == 0:
+                    room.house_rules.add(r)
 
         self.stdout.write(self.style.SUCCESS(f"{number} room(s) created!!"))
