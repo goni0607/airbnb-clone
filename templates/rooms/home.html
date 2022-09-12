@@ -10,9 +10,15 @@
         <h2>{{room.name}} / \{{room.price}}</h2>
     {% endfor %}
 
-    <h5>Page {{page}} or {{page_count}}</h5>
+    <!-- https://docs.djangoproject.com/en/4.1/ref/templates/builtins/ 참조 -->
+    <h5>
+    {% if page > 1 %}
+        <a href="?page={{page|add:-1}}">Previous</a>
+    {% endif %}
+        Page {{page}} or {{page_count}}
+    {% if page < page_count %}
+        <a href="?page={{page|add:1}}">Next</a>
+    {% endif %}
+    </h5>
 
-    {% for page in page_range %}
-    <a href="?page={{page}}">{{page}}</a>
-    {% endfor %}
 {% endblock content %}
