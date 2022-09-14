@@ -53,11 +53,25 @@
             <input type="number" name="baths" id="baths" value="{{s_baths}}" placeholder="Baths">
         </div>
         <div>
+            <label for="instant">Instant Book Only?</label>
+            <input type="checkbox" name="instant" id="instant" {% if s_instant %}checked{% endif %}>
+        </div>
+        <div>
+            <label for="super_host">By superhost Only?</label>
+            <input type="checkbox" name="super_host" id="super_host" {% if s_super_host %}checked{% endif %}>
+        </div>
+        <div>
             <h3>Amenities</h3>
             <ul>
             {% for amenity in amenities %}
                 <li>
-                    <input type="checkbox" id="a_{{amenity.pk}}" name="amenities" value="{{amenity.pk}}" />
+                    <input 
+                        type="checkbox" 
+                        id="a_{{amenity.pk}}" 
+                        name="amenities" 
+                        value="{{amenity.pk}}" 
+                        {% if amenity.pk|slugify in s_amenities %}checked{% endif %} 
+                    />
                     <label for="a_{{amenity.pk}}">{{amenity.name}}</label>
                 </li>
             {% endfor %}
@@ -68,7 +82,13 @@
             <ul>
             {% for facility in facilities %}
                 <li>
-                    <input type="checkbox" id="f_{{facility.pk}}" name="facilities" value="{{facility.pk}}" />
+                    <input 
+                        type="checkbox" 
+                        id="f_{{facility.pk}}" 
+                        name="facilities" 
+                        value="{{facility.pk}}" 
+                        {% if facility.pk|slugify in s_facilities %}checked{% endif %} 
+                    />
                     <label for="f_{{facility.pk}}">{{facility.name}}</label>
                 </li>
             {% endfor %}
@@ -79,7 +99,13 @@
             <ul>
             {% for rule in houserules %}
                 <li>
-                    <input type="checkbox" id="h_{{rule.pk}}" name="houserules" value="{{rule.pk}}" />
+                    <input 
+                        type="checkbox" 
+                        id="h_{{rule.pk}}" 
+                        name="houserules" 
+                        value="{{rule.pk}}" 
+                        {% if rule.pk|slugify in s_houserules %}checked{% endif %} 
+                    />
                     <label for="h_{{rule.pk}}">{{rule.name}}</label>
                 </li>
             {% endfor %}
