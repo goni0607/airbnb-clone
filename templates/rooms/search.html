@@ -32,6 +32,59 @@
             {% endfor %}
             </select>
         </div>
+        <div>
+            <label for="price">Price</label>
+            <input type="number" name="price" id="price" value="{{s_price}}" placeholder="price">
+        </div>
+        <div>
+            <label for="guests">Guests</label>
+            <input type="number" name="guests" id="guests" value="{{s_guests}}" placeholder="Guests">
+        </div>
+        <div>
+            <label for="bedrooms">Bedrooms</label>
+            <input type="number" name="bedrooms" id="bedrooms" value="{{s_bedrooms}}" placeholder="bedrooms">
+        </div>
+        <div>
+            <label for="beds">Beds</label>
+            <input type="number" name="beds" id="beds" value="{{s_beds}}" placeholder="Beds">
+        </div>
+        <div>
+            <label for="baths">Baths</label>
+            <input type="number" name="baths" id="baths" value="{{s_baths}}" placeholder="Baths">
+        </div>
+        <div>
+            <h3>Amenities</h3>
+            <ul>
+            {% for amenity in amenities %}
+                <li>
+                    <input type="checkbox" id="a_{{amenity.pk}}" name="amenities" value="{{amenity.pk}}" />
+                    <label for="a_{{amenity.pk}}">{{amenity.name}}</label>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h3>Facilities</h3>
+            <ul>
+            {% for facility in facilities %}
+                <li>
+                    <input type="checkbox" id="f_{{facility.pk}}" name="facilities" value="{{facility.pk}}" />
+                    <label for="f_{{facility.pk}}">{{facility.name}}</label>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h3>House Rules</h3>
+            <ul>
+            {% for rule in houserules %}
+                <li>
+                    <input type="checkbox" id="h_{{rule.pk}}" name="houserules" value="{{rule.pk}}" />
+                    <label for="h_{{rule.pk}}">{{rule.name}}</label>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
         <button>Search</button>
     </form>
 
