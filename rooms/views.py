@@ -39,8 +39,8 @@ def search(request):
     c_amenities = request.GET.getlist("amenities")
     c_facilities = request.GET.getlist("facilities")
     c_houserules = request.GET.getlist("houserules")
-    c_instant = request.GET.get("instant", False)
-    c_super_host = request.GET.get("super_host", False)
+    c_instant = bool(request.GET.get("instant", False))
+    c_super_host = bool(request.GET.get("super_host", False))
 
     form = {
         "s_city": city,
@@ -80,6 +80,42 @@ def search(request):
 
     if room_type != 0:
         filter_args["room_type__pk"] = room_type
+
+    if price > 0:
+        filter_args["price__lte"] = price
+
+    if guests > 0:
+        filter_args["price__lte"] = price
+
+    if guests > 0:
+        filter_args["guests__gte"] = guests
+
+    if bedrooms > 0:
+        filter_args["bedrooms__gte"] = bedrooms
+
+    if beds > 0:
+        filter_args["beds__gte"] = beds
+
+    if baths > 0:
+        filter_args["baths__gte"] = baths
+
+    if c_instant is True:
+        filter_args["instant_book"] = True
+
+    if c_super_host is True:
+        filter_args["host__is_superhost"] = True
+
+    if len(c_amenities) > 0:
+        for c_amenity in c_amenities:
+            filter_args["amenities__pk"] = int(c_amenity)
+
+    if len(c_facilities) > 0:
+        for c_facility in c_facilities:
+            filter_args["facilities__pk"] = int(c_facility)
+
+    if len(c_houserules) > 0:
+        for c_rule in c_houserules:
+            filter_args["house_rules__pk"] = int(c_rule)
 
     rooms = models.Room.objects.filter(**filter_args)
 
