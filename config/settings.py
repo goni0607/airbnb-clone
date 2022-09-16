@@ -143,3 +143,11 @@ AUTH_USER_MODEL = "users.User"
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 
 MEDIA_URL = "/media/"
+
+
+# Email Settings
+
+EMAIL_HOST = "smtp.mailgun.org"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = "airbnb@sandbox6e15f2919c4d41db914cf5434a958af4.mailgun.org"
+EMAIL_HOST_PASSWORD = "51562c0f86342608871e58d4273471da-680bcd74-44eab2b7"
