@@ -3,6 +3,8 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.mail import send_mail
 from django.db import models
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 
 class User(AbstractUser):
@@ -39,11 +41,15 @@ class User(AbstractUser):
         if self.email_confirmed is False:
             secret = uuid.uuid4().hex
             self.email_secret_key = secret
+            html_message = render_to_string(
+                "emails/verify_email.html", {"secret": secret}
+            )
             send_mail(
                 "Verify Airbnb Account",
-                f"Verify account, this is your secret: {secret}",
+                strip_tags(html_message),
                 settings.EMAIL_HOST_USER,
                 [self.email],
                 fail_silently=False,
+                html_message=html_message,
             )
         return
