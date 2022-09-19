@@ -1,5 +1,4 @@
 import os
-from unittest import result
 import requests
 from django.contrib.auth import authenticate, login, logout, views
 from django.shortcuts import render, redirect
@@ -88,51 +87,58 @@ def github_login(request):
     )
 
 
+class GithubException(Exception):
+    pass
+
+
 def github_callback(request):
-    code = request.GET.get("code", None)
-    if code is not None:
-        payload = {
-            "client_id": os.environ.get("GH_ID"),
-            "client_secret": os.environ.get("GH_SECRET"),
-            "code": code,
-        }
+    try:
+        code = request.GET.get("code", None)
+        if code is not None:
+            payload = {
+                "client_id": os.environ.get("GH_ID"),
+                "client_secret": os.environ.get("GH_SECRET"),
+                "code": code,
+            }
 
-        result = requests.post(
-            "https://github.com/login/oauth/access_token",
-            data=payload,
-            headers={"Accept": "application/json"},
-        )
-
-        result_json = result.json()
-        error = result_json.get("error", None)
-        if error is not None:
-            return redirect(reverse("users:login"))
-        else:
-            access_token = result_json.get("access_token")
-            profile_request = requests.get(
-                "https://api.github.com/user",
-                headers={
-                    "Authorization": f"Bearer {access_token}",
-                    "Accept": "application/json",
-                },
+            result = requests.post(
+                "https://github.com/login/oauth/access_token",
+                data=payload,
+                headers={"Accept": "application/json"},
             )
-            profile_json = profile_request.json()
-            username = profile_json.get("login", None)
-            if username is not None:
-                name = profile_json.get("name")
-                email = profile_json.get("email")
-                bio = profile_json.get("bio")
-                try:
-                    user_models.User.objects.get(email=email)
-                    return redirect(reverse("users:login"))
-                except user_models.User.DoesNotExist:
-                    user = user_models.User.objects.create(
-                        username=email, first_name=name, email=email, bio=bio
-                    )
-                    login(request, user)
-                    return redirect(reverse("core:home"))
-            else:
-                return redirect(reverse("users:login"))
 
-    else:
-        return redirect(reverse("core:home"))
+            result_json = result.json()
+            error = result_json.get("error", None)
+            if error is not None:
+                raise GithubException()
+            else:
+                access_token = result_json.get("access_token")
+                profile_request = requests.get(
+                    "https://api.github.com/user",
+                    headers={
+                        "Authorization": f"Bearer {access_token}",
+                        "Accept": "application/json",
+                    },
+                )
+                profile_json = profile_request.json()
+                username = profile_json.get("login", None)
+                if username is not None:
+                    name = profile_json.get("name")
+                    email = profile_json.get("email")
+                    bio = profile_json.get("bio")
+                    try:
+                        user_models.User.objects.get(email=email)
+                        raise GithubException()
+                    except user_models.User.DoesNotExist:
+                        user = user_models.User.objects.create(
+                            username=email, first_name=name, email=email, bio=bio
+                        )
+                        login(request, user)
+                        return redirect(reverse("core:home"))
+                else:
+                    raise GithubException()
+
+        else:
+            raise GithubException()
+    except GithubException:
+        return redirect(reverse("core:login"))
