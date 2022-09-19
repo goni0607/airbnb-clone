@@ -20,6 +20,8 @@ class CustomUserAdmin(UserAdmin):
                     "currency",
                     "is_superhost",
                     "bio",
+                    "email_confirmed",
+                    "email_secret_key",
                 )
             },
         ),
@@ -32,5 +34,7 @@ class CustomUserAdmin(UserAdmin):
         "language",
         "currency",
         "is_superhost",
+        "email_confirmed",
+        "email_secret_key",
     )
     list_filter = ("language", "currency", "is_superhost")

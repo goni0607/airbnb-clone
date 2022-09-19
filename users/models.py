@@ -44,12 +44,21 @@ class User(AbstractUser):
             html_message = render_to_string(
                 "emails/verify_email.html", {"secret": secret}
             )
-            send_mail(
+            # send_mail이 오류가 발생하여 print()로 대체함.
+            print(
                 "Verify Airbnb Account",
                 strip_tags(html_message),
                 settings.EMAIL_HOST_USER,
                 [self.email],
-                fail_silently=False,
-                html_message=html_message,
+                html_message,
             )
+            # send_mail(
+            #     "Verify Airbnb Account",
+            #     strip_tags(html_message),
+            #     settings.EMAIL_HOST_USER,
+            #     [self.email],
+            #     fail_silently=False,
+            #     html_message=html_message,
+            # )
+            self.save()
         return
