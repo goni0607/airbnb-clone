@@ -108,6 +108,7 @@ def github_callback(request):
             )
 
             result_json = result.json()
+            print(result_json)
             error = result_json.get("error", None)
             if error is not None:
                 raise GithubException()
@@ -121,24 +122,33 @@ def github_callback(request):
                     },
                 )
                 profile_json = profile_request.json()
+                print(profile_json)
                 username = profile_json.get("login", None)
                 if username is not None:
                     name = profile_json.get("name")
                     email = profile_json.get("email")
                     bio = profile_json.get("bio")
                     try:
-                        user_models.User.objects.get(email=email)
-                        raise GithubException()
+                        print(email)
+                        user = user_models.User.objects.get(email=email)
+                        if user.login_method != user_models.User.LOGIN_GITHUB:
+                            raise GithubException()
                     except user_models.User.DoesNotExist:
                         user = user_models.User.objects.create(
-                            username=email, first_name=name, email=email, bio=bio
+                            username=email,
+                            first_name=name,
+                            email=email,
+                            bio=bio,
+                            login_method=user_models.User.LOGIN_GITHUB,
                         )
-                        login(request, user)
-                        return redirect(reverse("core:home"))
+                        user.set_unusable_password()
+                        user.save()
+                    login(request, user)
+                    return redirect(reverse("core:home"))
                 else:
                     raise GithubException()
 
         else:
             raise GithubException()
     except GithubException:
-        return redirect(reverse("core:login"))
+        return redirect(reverse("users:login"))
