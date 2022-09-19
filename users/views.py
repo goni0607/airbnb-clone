@@ -182,5 +182,6 @@ def kakao_callback(request):
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             data=payload,
         )
+        print(token_request.json())
     except KakaoException:
         return redirect(reverse("users:login"))
