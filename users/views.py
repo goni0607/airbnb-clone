@@ -87,7 +87,7 @@ def github_login(request):
     )
 
 
-class GithubException(Exception):
+class OAuthException(Exception):
     pass
 
 
@@ -111,7 +111,7 @@ def github_callback(request):
             print(result_json)
             error = result_json.get("error", None)
             if error is not None:
-                raise GithubException()
+                raise OAuthException()
             else:
                 access_token = result_json.get("access_token")
                 profile_request = requests.get(
@@ -132,7 +132,7 @@ def github_callback(request):
                         print(email)
                         user = user_models.User.objects.get(email=email)
                         if user.login_method != user_models.User.LOGIN_GITHUB:
-                            raise GithubException()
+                            raise OAuthException()
                     except user_models.User.DoesNotExist:
                         user = user_models.User.objects.create(
                             username=email,
@@ -146,9 +146,41 @@ def github_callback(request):
                     login(request, user)
                     return redirect(reverse("core:home"))
                 else:
-                    raise GithubException()
+                    raise OAuthException()
 
         else:
-            raise GithubException()
-    except GithubException:
+            raise OAuthException()
+    except OAuthException:
+        return redirect(reverse("users:login"))
+
+
+class KakaoException(Exception):
+    pass
+
+
+def kakao_login(request):
+    client_id = os.environ.get("KAKAO_API")
+    redirect_uri = "http://127.0.0.1:8000/users/login/kakao/callback"
+    return redirect(
+        f"https://kauth.kakao.com/oauth/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}"
+    )
+
+
+def kakao_callback(request):
+    try:
+        code = request.GET.get("code")
+        client_id = os.environ.get("KAKAO_API")
+        redirect_uri = "http://127.0.0.1:8000/users/login/kakao/callback"
+        payload = {
+            "grant_type": "authorization_code",
+            "client_id": client_id,
+            "redirect_uri": redirect_uri,
+            "code": code,
+        }
+        token_request = requests.post(
+            "https://kauth.kakao.com/oauth/token",
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+            data=payload,
+        )
+    except KakaoException:
         return redirect(reverse("users:login"))
