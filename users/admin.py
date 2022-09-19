@@ -22,6 +22,7 @@ class CustomUserAdmin(UserAdmin):
                     "bio",
                     "email_confirmed",
                     "email_secret_key",
+                    "login_method",
                 )
             },
         ),
@@ -36,5 +37,6 @@ class CustomUserAdmin(UserAdmin):
         "is_superhost",
         "email_confirmed",
         "email_secret_key",
+        "login_method",
     )
     list_filter = ("language", "currency", "is_superhost")

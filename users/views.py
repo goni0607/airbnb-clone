@@ -1,4 +1,5 @@
 import os
+import requests
 from django.contrib.auth import authenticate, login, logout, views
 from django.shortcuts import render, redirect
 from django.views.generic import FormView
@@ -87,4 +88,14 @@ def github_login(request):
 
 
 def github_callback(request):
-    pass
+    code = request.GET.get("code", None)
+    if code is not None:
+        payload = {
+            "client_id": os.environ.get("GH_ID"),
+            "client_secret": os.environ.get("GH_SECRET"),
+            "code": code,
+        }
+        request = requests.post(
+            "https://github.com/login/oauth/access_token", data=payload
+        )
+    return redirect(reverse("core:home"))
