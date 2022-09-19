@@ -1,4 +1,5 @@
 import os
+from unittest import result
 import requests
 from django.contrib.auth import authenticate, login, logout, views
 from django.shortcuts import render, redirect
@@ -95,7 +96,43 @@ def github_callback(request):
             "client_secret": os.environ.get("GH_SECRET"),
             "code": code,
         }
-        request = requests.post(
-            "https://github.com/login/oauth/access_token", data=payload
+
+        result = requests.post(
+            "https://github.com/login/oauth/access_token",
+            data=payload,
+            headers={"Accept": "application/json"},
         )
-    return redirect(reverse("core:home"))
+
+        result_json = result.json()
+        error = result_json.get("error", None)
+        if error is not None:
+            return redirect(reverse("users:login"))
+        else:
+            access_token = result_json.get("access_token")
+            profile_request = requests.get(
+                "https://api.github.com/user",
+                headers={
+                    "Authorization": f"Bearer {access_token}",
+                    "Accept": "application/json",
+                },
+            )
+            profile_json = profile_request.json()
+            username = profile_json.get("login", None)
+            if username is not None:
+                name = profile_json.get("name")
+                email = profile_json.get("email")
+                bio = profile_json.get("bio")
+                try:
+                    user_models.User.objects.get(email=email)
+                    return redirect(reverse("users:login"))
+                except user_models.User.DoesNotExist:
+                    user = user_models.User.objects.create(
+                        username=email, first_name=name, email=email, bio=bio
+                    )
+                    login(request, user)
+                    return redirect(reverse("core:home"))
+            else:
+                return redirect(reverse("users:login"))
+
+    else:
+        return redirect(reverse("core:home"))
