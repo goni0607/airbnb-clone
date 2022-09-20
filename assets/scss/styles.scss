@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
+
+.search-box {
+    @apply border px-5 py-3 placeholder-gray-700 outline-none transition-shadow duration-300 rounded w-full shadow-md hover:shadow-lg focus:shadow-lg
+}
+
 @tailwind utilities;

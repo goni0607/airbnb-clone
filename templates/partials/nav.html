@@ -4,7 +4,7 @@
     {% if user.is_authenticated %}
       <li class="mx-4"><a href="{% url 'users:logout' %}">Log out</a></li>
     {% else %}
-      <li class="mx-4"><a href="{% url 'users:login' %}">Log in</a></li>
+      <li class="mx-4 border-b-2 border-b-white hover:border-blue-400"><a href="{% url 'users:login' %}">Log in</a></li>
       <li class="mx-4"><a href="{% url 'users:signup' %}">Sign up</a></li>
     {% endif %}
   </ul>
