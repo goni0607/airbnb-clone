@@ -1,0 +1,6 @@
+<div class="w-1/4 mb-8 px-2">
+    <a href="{% url 'rooms:detail' room.pk %}">
+        <div class="w-full h-60 bg-cover bg-center rounded-lg" style="background-image:url({{room.first_photo}})"></div>
+        {{room.name}} / ${{room.price}}
+    </a>
+</div>
