@@ -1,8 +1,11 @@
-{% extends 'base.html' %} {% block page_title %}Home{% endblock page_title %} 
+{% extends 'base.html' %} 
+
+{% block page_title %}Home{% endblock page_title %} 
 
 {% block content %}
 
-    <h1>Rooms List</h1>
+    <div class="container mx-auto rounded-2xl bg-gray-800 h-50vh my-12 bg-cover bg-center" style="background-image:url(https://images.unsplash.com/photo-1546874177-9e664107314e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=80)">
+    </div>
 
     {% for room in rooms %}
     <h3>
