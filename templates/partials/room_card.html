@@ -1,6 +1,17 @@
 <div class="w-1/4 mb-8 px-2">
     <a href="{% url 'rooms:detail' room.pk %}">
         <div class="w-full h-60 bg-cover bg-center rounded-lg" style="background-image:url({{room.first_photo}})"></div>
-        {{room.name}} / ${{room.price}}
+        <div class="flex justify-between mt-2">
+            <div>
+                {% if room.host.is_superhost %}
+                <span class="uppercase font-semibold border border-black text-black rounded px-1 py-px">superhost</span>
+                {% endif %}
+                <span class="text-gray-500 font-light">{{room.city}}</span>
+            </div>
+            <div class="flex items-center">
+                <i class="fas fa-star text-pink-600 text-xs mr-1"></i>
+                {{room.total_rating}}
+            </div>
+        </div>
     </a>
 </div>
