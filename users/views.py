@@ -1,10 +1,11 @@
 import os
 import requests
 from django.contrib.auth import authenticate, login, logout, views
+from django.contrib import messages
+from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
 from django.views.generic import FormView
 from django.urls import reverse, reverse_lazy
-from django.core.files.base import ContentFile
 from . import forms
 from users import models as user_models
 
@@ -150,6 +151,7 @@ def github_callback(request):
         else:
             raise OAuthException()
     except OAuthException:
+        messages.error(request, "Something went wrong")
         return redirect(reverse("users:login"))
 
 
@@ -222,4 +224,5 @@ def kakao_callback(request):
         login(request, user)
         return redirect(reverse("core:home"))
     except KakaoException:
+        messages.error(request, "Something went wrong")
         return redirect(reverse("users:login"))
