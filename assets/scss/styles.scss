@@ -12,4 +12,8 @@
     }
 }
 
+.c-btn-full {
+    @apply w-full border-2 text-center rounded-md py-4 mb-2;
+}
+
 @tailwind utilities;
