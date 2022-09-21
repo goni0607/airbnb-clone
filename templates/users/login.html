@@ -11,12 +11,7 @@
 
         {% include 'partials/social_login.html' %}
 
-        <form method="POST" action="{% url 'users:login' %}" class="w-full mt-2">
-            {% csrf_token %}
-            {{form.email}}
-            {{form.password}}
-            <button class="c-btn-full bg-red-600 text-white border-red-900">Log In</button>
-        </form>
+        {% include 'mixins/auth/auth_form.html' with form=form cta="Log in" %}
 
         <div class="mt-4 text-sm w-full">
             <span class="mr-2">Dont't have an account?</span><a href="{% url 'users:signup' %}" class="font-bold">Sign up</a>

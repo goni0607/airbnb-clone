@@ -1,0 +1,8 @@
+<div class="row-input {% if field.errors %}has-error{% endif %}">
+    {{field}}
+    {% if field.errors %}
+        {% for error in field.errors %}
+            <span role="alert" aria-atomic="true" class="text-red-700 text-sm font-bold">{{error}}</span>
+        {% endfor %}
+    {% endif %}
+</div>
