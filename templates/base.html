@@ -19,9 +19,9 @@
             <form method="get" action="{% url 'rooms:search' %}" class="w-9/12">
                 <input type="text" name="city" class="search-box" placeholder="Search by City" />
             </form>
+            {% endblock search-bar %}
         </div>
         {% include "partials/nav.html" %}
-    {% endblock search-bar %}
     </header>
 
     <div class="container mx-auto">
