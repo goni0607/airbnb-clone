@@ -21,7 +21,16 @@
 }
 
 input {
-    @apply w-full border-2 rounded-md py-4 mb-2 text-left px-6 focus:outline-teal-500 placeholder:focus:outline-2 border-gray-400 placeholder-gray-600;
+    @apply w-full border-2 rounded-md py-4 text-left px-6 focus:outline-teal-500 placeholder:focus:outline-2 border-gray-400 placeholder-gray-600;
+}
+
+.row-input {
+    @apply mb-2;
+    &.has-error {
+        input {
+            @apply bg-red-200 border-red-800;
+        }
+    }
 }
 
 @tailwind utilities;

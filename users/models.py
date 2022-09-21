@@ -31,6 +31,7 @@ class User(AbstractUser):
         (LOGIN_KAKAO, "Kakao"),
     )
 
+    email = models.EmailField(unique=True)
     avatar = models.ImageField(upload_to="avatars", blank=True)
     gender = models.CharField(
         choices=GENDER_CHOICE, default="Male", max_length=10, blank=True

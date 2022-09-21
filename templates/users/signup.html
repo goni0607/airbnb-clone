@@ -14,11 +14,20 @@
 
         <form method="POST" action="{% url 'users:signup' %}" class="w-full mt-2">
             {% csrf_token %}
-            {{form.first_name}}
-            {{form.last_name}}
-            {{form.email}}
-            {{form.password}}
-            {{form.password1}}
+
+            {{form.non_field_errors}}
+
+            {% for field in form %}
+            <div class="row-input {% if field.errors %}has-error{% endif %}">
+                {{field}}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <span role="alert" aria-atomic="true" class="text-red-700 text-sm font-bold">{{error}}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>            
+            {% endfor %}
+
             <button class="c-btn-full bg-red-600 text-white border-red-900">Sign Up</button>
         </form>
 
