@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    {{user.first_name}} Profile
+{% endblock page_title %}
+
+{% block content %}
+
+    <div class="wrap-user">
+
+        {{user_obj.first_name}}
+
+    </div>
+
+{% endblock content %}
