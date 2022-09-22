@@ -18,6 +18,12 @@
 
 .c-btn-full {
     @apply w-full border-2 text-center rounded-md py-4 mb-2;
+    &.btn--small {
+        @apply py-3;
+    }
+}
+.c-btn-link {
+    @apply w-full border border-red-900 text-center rounded-md py-3 text-white bg-red-600;
 }
 
 input {

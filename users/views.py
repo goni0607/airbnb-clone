@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout, views
 from django.contrib import messages
 from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
-from django.views.generic import FormView, DetailView
+from django.views.generic import FormView, DetailView, UpdateView
 from django.urls import reverse, reverse_lazy
 from . import forms
 from users import models as user_models
@@ -237,3 +237,22 @@ class UserProfileView(DetailView):
 
     model = user_models.User
     context_object_name = "user_obj"
+
+
+class UpdateProfileView(UpdateView):
+
+    model = user_models.User
+    template_name = "users/update-profile.html"
+    fields = [
+        "first_name",
+        "last_name",
+        "avatar",
+        "gender",
+        "birthdate",
+        "language",
+        "currency",
+        "bio",
+    ]
+
+    def get_object(self, queryset=None):
+        return self.request.user
