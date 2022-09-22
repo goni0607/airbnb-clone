@@ -89,7 +89,7 @@ def github_login(request):
     )
 
 
-class OAuthException(Exception):
+class GithubException(Exception):
     pass
 
 
@@ -112,7 +112,7 @@ def github_callback(request):
             result_json = result.json()
             error = result_json.get("error", None)
             if error is not None:
-                raise OAuthException()
+                raise GithubException("Can't get authorization token.")
             else:
                 access_token = result_json.get("access_token")
                 profile_request = requests.get(
@@ -131,7 +131,9 @@ def github_callback(request):
                     try:
                         user = user_models.User.objects.get(email=email)
                         if user.login_method != user_models.User.LOGIN_GITHUB:
-                            raise OAuthException()
+                            raise GithubException(
+                                f"Please log in with: {user.login_method}"
+                            )
                     except user_models.User.DoesNotExist:
                         user = user_models.User.objects.create(
                             username=email,
@@ -144,14 +146,15 @@ def github_callback(request):
                         user.set_unusable_password()
                         user.save()
                     login(request, user)
+                    messages.success(request, f"Welcome back {user.first_name}")
                     return redirect(reverse("core:home"))
                 else:
-                    raise OAuthException()
+                    raise GithubException("Can't get your profile.")
 
         else:
-            raise OAuthException()
-    except OAuthException:
-        messages.error(request, "Something went wrong")
+            raise GithubException("Can't get authorization code.")
+    except GithubException as e:
+        messages.error(request, e)
         return redirect(reverse("users:login"))
 
 
@@ -186,7 +189,7 @@ def kakao_callback(request):
         token_json = token_request.json()
         error = token_json.get("error")
         if error is not None:
-            raise KakaoException()
+            raise KakaoException("Can't get authorization code.")
         access_token = token_json.get("access_token")
         profile_request = requests.get(
             "https://kapi.kakao.com/v2/user/me",
@@ -195,17 +198,17 @@ def kakao_callback(request):
         profile_json = profile_request.json()
         kakao_account = profile_json.get("kakao_account", None)
         if kakao_account is None:
-            raise KakaoException()
+            raise KakaoException("Can't get Kakao Account Information.")
         email = kakao_account.get("email", None)
         if email is None:
-            raise KakaoException()
+            raise KakaoException("Can't get email for Kakao account.")
         properties = profile_json.get("properties")
         nickname = properties.get("nickname")
         profile_image = properties.get("profile_image")
         try:
             user = user_models.User.objects.get(email=email)
             if user.login_method != user_models.User.LOGIN_KAKAO:
-                raise KakaoException()
+                raise KakaoException(f"Please log in with: {user.login_method}")
         except user_models.User.DoesNotExist:
             user = user_models.User.objects.create(
                 email=email,
@@ -222,7 +225,8 @@ def kakao_callback(request):
                     f"{nickname}-avatar", ContentFile(photo_request.content)
                 )
         login(request, user)
+        messages.success(request, f"Welcome back {user.first_name}")
         return redirect(reverse("core:home"))
-    except KakaoException:
-        messages.error(request, "Something went wrong")
+    except KakaoException as e:
+        messages.error(request, e)
         return redirect(reverse("users:login"))
