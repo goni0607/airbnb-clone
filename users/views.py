@@ -42,9 +42,10 @@ class LoginView(FormView):
 #         return render(request, "users/login.html", {"form": form})
 
 
-class LogoutView(views.LogoutView):
-
-    next_page = reverse_lazy("core:home")
+def log_out(request):
+    messages.info(request, "See you later")
+    logout(request)
+    return redirect(reverse("core:home"))
 
 
 # def log_out(request):
