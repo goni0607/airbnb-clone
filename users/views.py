@@ -267,3 +267,12 @@ class UpdateProfileView(UpdateView):
 class PasswordChangeView(PasswordChangeView):
 
     template_name = "users/change-password.html"
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        form.fields["old_password"].widget.attrs = {"placeholder": "Current password"}
+        form.fields["new_password1"].widget.attrs = {"placeholder": "New password"}
+        form.fields["new_password2"].widget.attrs = {
+            "placeholder": "New confirm password"
+        }
+        return form
