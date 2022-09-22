@@ -1,4 +1,5 @@
 <div class="row-input {% if field.errors %}has-error{% endif %}">
+    {{field.label}}
     {{field}}
     {% if field.errors %}
         {% for error in field.errors %}
