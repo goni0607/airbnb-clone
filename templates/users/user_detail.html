@@ -1,14 +1,26 @@
 {% extends 'base.html' %}
 
 {% block page_title %}
-    {{user.first_name}} Profile
+    {{user.first_name}}'s Profile
 {% endblock page_title %}
 
 {% block content %}
 
     <div class="wrap-user">
+        {% include 'mixins/user_avatar.html' with user=user_obj %}
 
-        {{user_obj.first_name}}
+        <h3 class="font-bold text-2xl mt-4">
+            {{user_obj.first_name}}
+            {% if user_obj.is_superhost %}
+                <i class="fas fa-check-circle ml-2 text-teal-500"><span class="sr-only">Super Hosts</span></i>
+            {% endif %}
+        </h3>
+
+        {% if user_obj.bio %}
+        <p class="whitespace-pre-line mt-4">{{user.bio}}</p>
+        {% endif %}
+
+        <a href="#" class="c-btn-full mt-4">Edit Profile</a>
 
     </div>
 
