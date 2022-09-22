@@ -16,7 +16,6 @@ class LoginView(mixins.LoggedOutOnlyView, FormView):
 
     template_name = "users/login.html"
     form_class = forms.LoginForm
-    success_url = reverse_lazy("core:home")
 
     def form_valid(self, form):
         email = form.cleaned_data.get("email")
@@ -25,6 +24,10 @@ class LoginView(mixins.LoggedOutOnlyView, FormView):
         if user is not None:
             login(self.request, user)
         return super().form_valid(form)
+
+    def get_success_url(self):
+        success_url = self.request.GET.get("next", reverse("core:home"))
+        return success_url
 
 
 # class LoginView(View):
@@ -241,7 +244,7 @@ class UserProfileView(DetailView):
     context_object_name = "user_obj"
 
 
-class UpdateProfileView(SuccessMessageMixin, UpdateView):
+class UpdateProfileView(mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
 
     model = user_models.User
     template_name = "users/update-profile.html"
@@ -266,7 +269,9 @@ class UpdateProfileView(SuccessMessageMixin, UpdateView):
     #     return super().form_valid(form)
 
 
-class PasswordChangeView(PasswordChangeView):
+class PasswordChangeView(
+    mixins.LoggedInOnlyView, mixins.EmailLoginOnlyView, PasswordChangeView
+):
 
     template_name = "users/change-password.html"
 
