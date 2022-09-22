@@ -26,8 +26,13 @@
     @apply w-full border border-red-900 text-center rounded-md py-3 text-white bg-red-600;
 }
 
-input {
+input, select {
     @apply w-full border-2 rounded-md py-4 text-left px-6 focus:outline-teal-500 placeholder:focus:outline-2 border-gray-400 placeholder-gray-600;
+}
+
+textarea {
+    resize: none;
+    @apply h-32 w-full border-2 rounded-md text-left p-2 focus:outline-teal-500 placeholder:focus:outline-2 border-gray-400 placeholder-gray-600;
 }
 
 .row-input {

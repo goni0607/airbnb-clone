@@ -1,6 +1,7 @@
 import os
 import requests
 from django.contrib.auth import authenticate, login, logout, views
+from django.contrib.auth.views import PasswordChangeView
 from django.contrib import messages
 from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
@@ -246,7 +247,6 @@ class UpdateProfileView(UpdateView):
     fields = [
         "first_name",
         "last_name",
-        "avatar",
         "gender",
         "birthdate",
         "language",
@@ -256,3 +256,14 @@ class UpdateProfileView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+    # def form_valid(self, form):
+    #     email = form.cleaned_data.get("email")
+    #     self.object.username = email
+    #     self.object.save()
+    #     return super().form_valid(form)
+
+
+class PasswordChangeView(PasswordChangeView):
+
+    template_name = "users/change-password.html"
