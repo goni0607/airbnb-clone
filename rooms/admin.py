@@ -76,6 +76,7 @@ class RoomAdmin(admin.ModelAdmin):
 
     list_display = (
         "name",
+        "host_name",
         "country",
         "city",
         "price",
@@ -120,6 +121,9 @@ class RoomAdmin(admin.ModelAdmin):
 
     def count_photos(self, obj):
         return obj.photos.count()
+
+    def host_name(self, obj):
+        return obj.host.first_name
 
     count_amenities.short_description = "Count of amenities"
 
