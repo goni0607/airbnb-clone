@@ -44,6 +44,14 @@ textarea {
     }
 }
 
+.border-section {
+    @apply mb-8 pb-8 border-b;
+}
+
+h4 {
+    @apply font-bold text-xl mb-4;
+}
+
 @keyframes messageFadeIn {
     0% { opacity: 0; transform: translateY(0); }
     5% { opacity: 1; transform: translateY(.75rem); }
