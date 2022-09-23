@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    {{room.name}}'s Photos
+{% endblock page_title %}
+
+{% block search-bar %}{% endblock search-bar %}
+
+{% block content %}
+
+    <div class="mt-12 grid lg:grid-cols-2 grid-cols-1 gap-4">
+
+    {% for photo in room.photos.all %}
+        <div class="p-2 border border-gray-300 flex">
+            <img class="w-52" src="{{photo.file.url}}" alt="" />
+            <div class="w-full flex flex-col justify-between">
+                <div>
+                    <span class="ml-3 text-xl">{{photo.caption}}</span>
+                </div>
+                <div class="p-4 flex">
+                    <a class="c-btn-link block mr-2 bg-teal-700" href="#">Edit Photo</a>
+                    <a class="c-btn-link block ml-2 bg-red-700" href="#">Delete Photo</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    </div>
+
+{% endblock content %}

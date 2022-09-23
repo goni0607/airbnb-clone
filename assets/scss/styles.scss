@@ -12,8 +12,11 @@
     }
 }
 
+.wrap {
+    @apply container mx-auto flex flex-col items-center border border-gray-400 mt-12 p-8;
+}
 .wrap-user {
-    @apply container mx-auto flex flex-col w-96 items-center border border-gray-400 mt-12 p-8;
+    @apply wrap w-96;
 }
 
 .c-btn-full {

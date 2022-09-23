@@ -1,8 +1,9 @@
+from django.http import Http404
 from django.core.paginator import Paginator
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, View
-from . import models
-from . import forms
+from django.views.generic import ListView, DetailView, View, UpdateView
+from . import models, forms
+from users import mixins
 
 
 class HomeView(ListView):
@@ -108,3 +109,46 @@ class SearchView(View):
             form = forms.SearchForm()
 
         return render(request, "rooms/search.html", {"form": form})
+
+
+class EditRoomView(mixins.LoggedInOnlyView, UpdateView):
+
+    model = models.Room
+    template_name = "rooms/room_edit.html"
+    fields = [
+        "name",
+        "description",
+        "country",
+        "city",
+        "price",
+        "address",
+        "guests",
+        "beds",
+        "bedrooms",
+        "baths",
+        "check_in",
+        "check_out",
+        "instant_book",
+        "room_type",
+        "amenities",
+        "facilities",
+        "house_rules",
+    ]
+
+    def get_object(self, queryset=None):
+        room = super().get_object(queryset=queryset)
+        if room.host.pk != self.request.user.pk:
+            raise Http404()
+        return room
+
+
+class RoomPhotosView(mixins.LoggedInOnlyView, DetailView):
+
+    model = models.Room
+    template_name = "rooms/room_photos.html"
+
+    def get_object(self, queryset=None):
+        room = super().get_object(queryset=queryset)
+        if room.host.pk != self.request.user.pk:
+            raise Http404()
+        return room
