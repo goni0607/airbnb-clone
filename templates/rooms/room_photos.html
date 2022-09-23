@@ -19,7 +19,7 @@
                 </div>
                 <div class="p-4 flex">
                     <a class="c-btn-link block mr-2 bg-teal-700" href="#">Edit Photo</a>
-                    <a class="c-btn-link block ml-2 bg-red-700" href="#">Delete Photo</a>
+                    <a class="c-btn-link block ml-2 bg-red-700" href="{% url 'rooms:photo-delete' room.pk photo.pk %}">Delete Photo</a>
                 </div>
             </div>
         </div>
