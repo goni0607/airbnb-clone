@@ -72,8 +72,34 @@
                 {% endfor %}
                 </ul>
             </div>
-            <div class="border-section">
-                <h4 class="text-2xl">Reviews</h4>
+            <div class="border-section border-none">
+                <div class="flex items-center gap-8">
+                    <h4 class="text-2xl mb-0">Reviews</h4>
+                    <ul class="flex gap-4 items-center">
+                        <li>
+                            <i class="fas fa-star fa-sm text-teal-700"></i>
+                            <span class="sr-only">total rating:</span>
+                            <span class="font-bold text-xl">{{room.total_rating}}</span>
+                        </li>
+                        <li><span class="font-bold text-xl">{{room.reviews.count}}</span> review{{room.reviews.count|pluralize}}</li>
+                    </ul>
+                </div>
+                <div class="flex flex-col">
+                    {% for review in room.reviews.all %}
+                    <div class="py-8 border-b">
+                        <div class="flex items-center mb-4">
+                            <div>
+                                {% include 'mixins/user_avatar.html' with user=review.user w_and_h="w-14 h-14" text="text-2xl" %}
+                            </div>
+                            <div class="flex flex-col ml-4">
+                                <span class="font-bold text-lg">{{review.user.first_name}}</span>
+                                <span class="text-gray-700">{{review.created_at|date:"F Y"}}</span>
+                            </div>
+                        </div>
+                        <p>{{review.review}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         <div class="w-1/3">
