@@ -1,6 +1,9 @@
+from pyexpat import model
 from typing_extensions import Required
 from django import forms
 from django_countries.fields import CountryField
+
+from rooms.admin import RoomAdmin
 from . import models
 
 
@@ -33,3 +36,18 @@ class SearchForm(forms.Form):
         widget=forms.CheckboxSelectMultiple,
         required=False,
     )
+
+
+class PhotoForm(forms.ModelForm):
+    class Meta:
+        model = models.Photo
+        fields = [
+            "file",
+            "caption",
+        ]
+
+    def save(self, pk, commit=False):
+        photo = super().save(commit)
+        room = models.Room.objects.get(pk=pk)
+        photo.room = room
+        photo.save()

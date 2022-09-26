@@ -8,7 +8,27 @@
 
 {% block content %}
 
-    <div class="mt-12 grid lg:grid-cols-2 grid-cols-1 gap-4">
+    <div class="mt-12 text-right mb-8">
+        <form method="post" action="{% url 'rooms:add-photo' room.pk %}" enctype="multipart/form-data" class="w-full">
+            <fieldset class="w-full flex items-end gap-4 p-2 border text-left">
+                <legend class="text-xl font-bold">Photo Upload</legend>
+                {% csrf_token %}
+                <div class="w-3/12">
+                    {{photo_form.file.label_tag}}{{photo_form.file.errors}}
+                    {{photo_form.file}}
+                </div>
+                <div class="w-7/12">
+                    {{photo_form.caption.label_tag}}{{photo_form.file.errors}}
+                    {{photo_form.caption}}
+                </div>
+                <div class="w-2/12">
+                    <button type="submit" class="c-btn-full px-12 mb-0" href="{% url 'rooms:add-photo' room.pk %}">Upload Photo</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <div class="grid lg:grid-cols-2 grid-cols-1 gap-4">
 
     {% for photo in room.photos.all %}
         <div class="p-2 border border-gray-300 flex">

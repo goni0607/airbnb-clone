@@ -1,10 +1,12 @@
+from audioop import minmax
+from email import message
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
 from django.http import Http404
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, View, UpdateView
+from django.views.generic import ListView, DetailView, View, UpdateView, FormView
 from django.urls import reverse
 from . import models, forms
 from users import mixins
@@ -157,6 +159,12 @@ class RoomPhotosView(mixins.LoggedInOnlyView, DetailView):
             raise Http404()
         return room
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = forms.PhotoForm
+        context["photo_form"] = form
+        return context
+
 
 @login_required
 def delete_photo(request, room_pk, photo_pk):
@@ -198,3 +206,22 @@ class EditPhotoView(mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         room_pk = self.kwargs.get("room_pk")
         return reverse("rooms:photos", kwargs={"pk": room_pk})
+
+
+class CreatePhotoView(mixins.LoggedInOnlyView, FormView):
+
+    model = models.Photo
+    fields = [
+        "file",
+        "caption",
+    ]
+    form_class = forms.PhotoForm
+    template_name = "rooms/room_photos.html"
+
+    def form_valid(self, form):
+        print("?????????????????????????")
+        pk = self.kwargs.get("pk")
+        print(pk)
+        form.save(pk)
+        messages.success(self.request, "Photo uploaded!!")
+        return redirect(reverse("rooms:photos", kwargs={"pk": pk}))

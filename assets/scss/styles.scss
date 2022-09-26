@@ -20,7 +20,7 @@
 }
 
 .c-btn-full {
-    @apply w-full border-2 text-center rounded-md py-4 mb-2;
+    @apply w-full border-2 text-center rounded-md py-4 mb-2 text-white bg-red-600 border-red-900;
     &.btn--small {
         @apply py-3;
     }
