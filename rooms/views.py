@@ -219,7 +219,6 @@ class CreatePhotoView(mixins.LoggedInOnlyView, FormView):
     template_name = "rooms/room_photos.html"
 
     def form_valid(self, form):
-        print("?????????????????????????")
         pk = self.kwargs.get("pk")
         print(pk)
         form.save(pk)

@@ -19,4 +19,5 @@ urlpatterns = [
         "change-password/", views.PasswordChangeView.as_view(), name="change-password"
     ),
     path("<int:pk>/", views.UserProfileView.as_view(), name="profile"),
+    path("switch-hosting/", views.switch_hosting, name="switch-hosting"),
 ]
