@@ -122,6 +122,13 @@ class CreateRoomView(mixins.LoggedInOnlyView, FormView):
     template_name = "rooms/room_create.html"
     form_class = forms.CreateForm
 
+    def get(self, request, *args, **kwargs):
+        print("get!!")
+        if "is_hosting" in self.request.session:
+            return super().get(request, *args, **kwargs)
+        else:
+            raise Http404()
+
     def form_valid(self, form):
         room = form.save()
         room.host = self.request.user
