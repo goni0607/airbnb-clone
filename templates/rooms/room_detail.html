@@ -67,7 +67,7 @@
             <div class="border-section">
                 <h4>House Rules</h4>
                 <ul class="w-full flex flex-wrap list-disc list-inside">
-                {% for h in room.houserules.all %}
+                {% for h in room.house_rules.all %}
                     <li class="w-1/2">{{h}}</li>
                 {% endfor %}
                 </ul>

@@ -9,6 +9,10 @@
 {% block content %}
 
     <div class="mt-12 text-right mb-8">
+        <a href="{% url 'rooms:detail' room.pk %}" class="c-btn-link px-8">Go to the room</a>
+    </div>
+
+    <div class="text-right mb-8">
         <form method="post" action="{% url 'rooms:add-photo' room.pk %}" enctype="multipart/form-data" class="w-full">
             <fieldset class="w-full flex items-end gap-4 p-2 border text-left">
                 <legend class="text-xl font-bold">Photo Upload</legend>

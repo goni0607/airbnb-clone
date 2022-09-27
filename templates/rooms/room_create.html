@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Create Room
+{% endblock page_title %}
+
+{% block content %}
+
+    <div class="wrap-user">
+
+        {% include 'mixins/auth/auth_form.html' with form=form cta="Create room" %}
+
+    </div>
+
+{% endblock content %}
