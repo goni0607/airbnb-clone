@@ -108,9 +108,9 @@
         {% else %}
             {% if not request.session.is_hosting %}
                 {% for calendar in room.get_calendars %}
-                <div>
-                    {{calendar.get_month}}/{{calendar.year}}
-                    <table>
+                <div class="w-full">
+                    <h4 class="text-center">{{calendar.get_month}}/{{calendar.year}}</h4>
+                    <table class="calendar">
                         <thead>
                             <tr>
                             {% for day in calendar.day_names %}
