@@ -105,8 +105,38 @@
         <div class="w-1/3 ml-12">
         {% if room.host == user %}
             <a href="{% url 'rooms:edit' room.pk %}" class="c-btn-link block">Edit Room</a>
+        {% else %}
+            {% if not request.session.is_hosting %}
+                {% for calendar in room.get_calendars %}
+                <div>
+                    {{calendar.get_month}}/{{calendar.year}}
+                    <table>
+                        <thead>
+                            <tr>
+                            {% for day in calendar.day_names %}
+                                <th scope="col">{{day}}</th>
+                            {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for week in calendar.get_days %}
+                            <tr>
+                                {% for day, _ in week %}
+                                <td>
+                                {% if day %}
+                                {{day}}
+                                {% endif %}
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                    
+                        </tbody>
+                    </table>
+                </div>
+                {% endfor %}
+            {% endif %}
         {% endif %}
-            
         </div>
     </div>
 </div>
