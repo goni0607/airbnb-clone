@@ -1,4 +1,5 @@
-import calendar
+import calendar, datetime
+from django.utils import timezone
 
 
 class Calendar(calendar.Calendar):
@@ -23,8 +24,24 @@ class Calendar(calendar.Calendar):
         )
 
     def get_days(self):
+        now = timezone.now()
         weeks = self.monthdays2calendar(self.year, self.month)
-        return weeks
+        new_weeks = []
+        for week in weeks:
+            new_week = []
+            for day_tuple in week:
+                day, _ = day_tuple
+                if day < now.day:
+                    if now.year < self.year or now.month < self.month:
+                        new_week.append(day_tuple + (True,))
+                    else:
+                        new_week.append(day_tuple + (False,))
+                else:
+                    new_week.append(day_tuple + (True,))
+
+            new_weeks.append(new_week)
+        print(new_weeks)
+        return new_weeks
         # days = []
         # for week in weeks:
         #     for day, _ in week:

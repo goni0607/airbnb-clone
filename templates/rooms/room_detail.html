@@ -121,10 +121,14 @@
                         <tbody>
                             {% for week in calendar.get_days %}
                             <tr>
-                                {% for day, _ in week %}
-                                <td>
+                                {% for day, _, able in week %}
+                                <td class="{% if not day %}{% elif able %}enable{% else %}disable{% endif %}">
                                 {% if day %}
-                                {{day}}
+                                    {% if able %}
+                                        <a href="#">{{day}}</a>
+                                    {% else %}
+                                        {{day}}
+                                    {% endif %}
                                 {% endif %}
                                 </td>
                                 {% endfor %}
