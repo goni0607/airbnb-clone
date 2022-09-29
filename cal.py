@@ -40,7 +40,6 @@ class Calendar(calendar.Calendar):
                     new_week.append(day_tuple + (True,))
 
             new_weeks.append(new_week)
-        print(new_weeks)
         return new_weeks
         # days = []
         # for week in weeks:
