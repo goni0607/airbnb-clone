@@ -2,10 +2,10 @@
 <td></td>
 {% else %}
     {% if cal_date.is_booked %}
-        <td class="booked">{{cal_date.date.day}}</td>
+        <td class="booked" title="Reserved">{{cal_date.date.day}}</td>
     {% elif cal_date.is_past %}
         <td class="disable">{{cal_date.date.day}}</td>
     {% else %}
-        <td><a href="#">{{cal_date.date.day}}</a></td>
+        <td><a href="{% url 'reservations:create' room.pk cal_date.date.year cal_date.date.month cal_date.date.day %}" title="{{cal_date.date}} - available">{{cal_date.date.day}}</a></td>
     {% endif %}
 {% endif %}

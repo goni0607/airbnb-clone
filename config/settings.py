@@ -162,20 +162,22 @@ EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
 
 LOGIN_URL = "/users/login/"
 
+QUERY_DEBUG = False
 
-# LOGGING = {
-#     "version": 1,
-#     "disable_existing_loggers": False,
-#     "handlers": {
-#         "console": {
-#             "level": "DEBUG",
-#             "class": "logging.StreamHandler",
-#         }
-#     },
-#     "loggers": {
-#         "django.db.backends": {
-#             "handlers": ["console"],
-#             "level": "DEBUG",
-#         },
-#     },
-# }
+if QUERY_DEBUG:
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "console": {
+                "level": "DEBUG",
+                "class": "logging.StreamHandler",
+            }
+        },
+        "loggers": {
+            "django.db.backends": {
+                "handlers": ["console"],
+                "level": "DEBUG",
+            },
+        },
+    }

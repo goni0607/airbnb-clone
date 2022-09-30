@@ -40,7 +40,7 @@ class Calendar(calendar.Calendar):
 
     def is_booked(self, date):
         for r in self.reservations:
-            if date >= r.check_in and date < r.check_out:
+            if date >= r.check_in and date <= r.check_out:
                 return True
         return False
 
@@ -61,7 +61,6 @@ class Calendar(calendar.Calendar):
                 else:
                     new_week.append(None)
             new_weeks.append(new_week)
-        print(new_weeks)
         return new_weeks
         # days = []
         # for week in weeks:
