@@ -1,5 +1,6 @@
 {% extends 'base.html' %} 
 {% load sexy_capitals %}
+{% load is_booked %}
 
 {% block page_title %}{{room.name}}{% endblock page_title %} 
 
@@ -104,7 +105,6 @@
             </div>
         </div>
         <div class="w-1/3 ml-12">
-        {{'something'|sexy_capitals}}
         {% if room.host == user %}
             <a href="{% url 'rooms:edit' room.pk %}" class="c-btn-link block">Edit Room</a>
         {% else %}
@@ -123,16 +123,8 @@
                         <tbody>
                             {% for week in calendar.get_days %}
                             <tr>
-                                {% for day, _, able in week %}
-                                <td class="{% if not day %}{% elif able %}enable{% else %}disable{% endif %}">
-                                {% if day %}
-                                    {% if able %}
-                                        <a href="#">{{day}}</a>
-                                    {% else %}
-                                        {{day}}
-                                    {% endif %}
-                                {% endif %}
-                                </td>
+                                {% for cal_date in week %}
+                                {% include 'mixins/cal_day.html' with cal_date=cal_date %}
                                 {% endfor %}
                             </tr>
                             {% endfor %}

@@ -66,6 +66,9 @@ h4 {
         &.disable {
             @apply bg-gray-200 text-gray-500;
         }
+        &.booked {
+            @apply line-through bg-red-200;
+        }
         a {
             @apply block w-full h-full hover:bg-teal-200 hover:font-bold focus:bg-teal-200 focus:font-bold leading-10;
         }
