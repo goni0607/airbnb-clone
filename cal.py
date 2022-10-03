@@ -35,7 +35,7 @@ class Calendar(calendar.Calendar):
             self.room.reservations.filter(
                 Q(check_in__year=self.year, check_in__month=self.month)
                 | Q(check_out__year=self.year, check_out__month=self.month)
-            )
+            ).exclude(status="canceled")
         )
 
     def is_booked(self, date):
