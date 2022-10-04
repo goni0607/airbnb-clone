@@ -1,8 +1,10 @@
+{% load i18n %}
 <footer class="container mx-auto text-center mt-12 py-10 border-t text-gray-600 relative">
     <div class="absolute top-0 right-0 w-40 mt-2">
+        {% get_current_language as LANGUAGE_CODE %}
         <select id="js-lang" class="p-2">
-            <option value="ko">Korean</option>
-            <option value="en">English</option>
+            <option value="ko" {% if LANGUAGE_CODE == 'ko' %}selected{% endif %}>Korean</option>
+            <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
         </select>
     </div>
     <p>

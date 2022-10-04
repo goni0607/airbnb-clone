@@ -1,5 +1,6 @@
 import os
 import requests
+from django.utils.translation import activate
 from django.contrib.auth import authenticate, login, logout, views
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib import messages
@@ -12,6 +13,7 @@ from django.views.generic import FormView, DetailView, UpdateView
 from django.urls import reverse, reverse_lazy
 from . import forms, mixins
 from users import models as user_models
+from config import settings
 
 
 class LoginView(mixins.LoggedOutOnlyView, FormView):
@@ -301,6 +303,10 @@ def switch_hosting(request):
 
 def switch_lang(request):
     lang = request.GET.get("lang", None)
+    print(lang)
     if lang is not None:
-        pass
-    return HttpResponse(status=200)
+        # request.session[translation.LANGUAGE_SESSION_KEY] = lang
+        activate(lang)
+    response = HttpResponse(status=200)
+    response.set_cookie(settings.LANG_COOKIE_NAME, lang)
+    return response
