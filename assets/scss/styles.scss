@@ -33,6 +33,16 @@ input, select {
     @apply w-full border-2 rounded-md py-4 text-left px-6 focus:outline-teal-500 placeholder:focus:outline-2 border-gray-400 placeholder-gray-600;
 }
 
+.radio-button {
+    @apply flex mb-4;
+    label {
+        @apply mr-5;
+    }
+    input[type=radio] {
+        @apply w-auto inline;
+    }
+}
+
 textarea {
     resize: none;
     @apply h-32 w-full border-2 rounded-md text-left p-2 focus:outline-teal-500 placeholder:focus:outline-2 border-gray-400 placeholder-gray-600;

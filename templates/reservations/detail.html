@@ -35,7 +35,7 @@
                             <h4>Write your review</h4>
                             <form action="{% url 'reviews:create' reservation.room.pk %}" method="POST">
                                 {% csrf_token %}
-                                {{review_form}}
+                                {{review_form.as_div}}
                                 <button type="submit" class="c-btn-full mt-4">Submit Review</button>
                             </form>
                         {% else %}
