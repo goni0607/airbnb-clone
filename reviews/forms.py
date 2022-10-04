@@ -14,3 +14,7 @@ class CreateReviewForm(forms.ModelForm):
             "check_in",
             "value",
         )
+
+    def save(self):
+        review = super().save(False)
+        return review
