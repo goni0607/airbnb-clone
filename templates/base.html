@@ -29,7 +29,14 @@
         {% block content %}{% endblock content %}
     </div>
     {% include "partials/footer.html" %}
-
+    <script>
+        const selectLang = document.getElementById("js-lang");
+        const selectLangChange = () => {
+            selected = selectLang.value;
+            fetch(`{% url 'users:switch-language' %}?lang=${selected}`).then(() => window.location.reload());
+        }
+        selectLang.addEventListener("change", selectLangChange);
+    </script>
 </body>
 
 </html>

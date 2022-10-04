@@ -20,7 +20,7 @@ msgstr ""
 
 #: templates/base.html:21
 msgid "Search by City"
-msgstr ""
+msgstr "도시명으로 검색하세요"
 
 #: venv/lib/python3.10/site-packages/click/_termui_impl.py:496
 #, python-brace-format

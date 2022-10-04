@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.files.base import ContentFile
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import FormView, DetailView, UpdateView
 from django.urls import reverse, reverse_lazy
@@ -296,3 +297,10 @@ def switch_hosting(request):
     except KeyError:
         request.session["is_hosting"] = True
     return redirect(reverse("core:home"))
+
+
+def switch_lang(request):
+    lang = request.GET.get("lang", None)
+    if lang is not None:
+        pass
+    return HttpResponse(status=200)
