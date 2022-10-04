@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-04 11:43+0900\n"
+"POT-Creation-Date: 2022-10-04 17:08+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,6 +21,68 @@ msgstr ""
 #: templates/base.html:21
 msgid "Search by City"
 msgstr "도시명으로 검색하세요"
+
+#: templates/partials/nav.html:7
+msgid "Stop hosting"
+msgstr "호스팅 정지"
+
+#: templates/partials/nav.html:9
+msgid "Start hosting"
+msgstr "호스팅 시작"
+
+#: templates/partials/nav.html:15
+#, fuzzy
+#| msgid "Bed rooms"
+msgid "Create room"
+msgstr "방 수"
+
+#: templates/partials/nav.html:17
+msgid "Profile"
+msgstr "프로필"
+
+#: templates/partials/nav.html:18
+msgid "Log out"
+msgstr "로그아웃"
+
+#: templates/partials/nav.html:20
+msgid "Log in"
+msgstr "로그인"
+
+#: templates/partials/nav.html:21
+msgid "Sign up"
+msgstr "회원가입"
+
+#: templates/rooms/room_detail.html:39
+msgid "Max Guests"
+msgstr "최대 인원"
+
+#: templates/rooms/room_detail.html:40
+msgid "Bed rooms"
+msgstr "방 수"
+
+#: templates/rooms/room_detail.html:41
+msgid "Beds"
+msgstr "침대 수"
+
+#: templates/rooms/room_detail.html:42
+msgid "Baths"
+msgstr "욕실 수"
+
+#: templates/rooms/room_detail.html:53
+msgid "Amenities"
+msgstr "편의시설"
+
+#: templates/rooms/room_detail.html:61
+msgid "Facilities"
+msgstr "주요시설"
+
+#: templates/rooms/room_detail.html:69
+msgid "House Rules"
+msgstr "숙소 이용규칙"
+
+#: templates/rooms/room_detail.html:78
+msgid "Reviews"
+msgstr "후기"
 
 #: venv/lib/python3.10/site-packages/click/_termui_impl.py:496
 #, python-brace-format

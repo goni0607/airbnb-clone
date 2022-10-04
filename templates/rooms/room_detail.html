@@ -1,6 +1,5 @@
 {% extends 'base.html' %} 
-{% load sexy_capitals %}
-{% load is_booked %}
+{% load i18n %}
 
 {% block page_title %}{{room.name}}{% endblock page_title %} 
 
@@ -17,6 +16,7 @@
             {% if room.host.is_superhost %}
             <li class="text-sm border border-gray-500 rounded font-bold px-2">SUPERHOST</li>
             {% endif %}
+            <li><a href="{% url 'lists:add' room.pk %}" class="c-btn-link btn--small">Add Favorite List</a></a>
         </ul>
     </div>
 
@@ -37,10 +37,10 @@
                         {{room.room_type}} information hosted by <a class="font-bold text-teal-700" href="{{room.host.get_absolute_url}}">{{room.host.first_name}}</a>
                     </h3>
                     <ul class="flex gap-x-4">
-                        <li>Max Guests: {{room.guests}}</li>
-                        <li>Bed rooms: {{room.bedrooms}}</li>
-                        <li>Beds: {{room.beds}}</li>
-                        <li>Baths: {{room.baths}}</li>
+                        <li>{% trans "Max Guests" %}: {{room.guests}}</li>
+                        <li>{% trans "Bed rooms" %}: {{room.bedrooms}}</li>
+                        <li>{% trans "Beds" %}: {{room.beds}}</li>
+                        <li>{% trans "Baths" %}: {{room.baths}}</li>
                     </ul>
                 </div>
                 <div>
@@ -51,7 +51,7 @@
                 <p>{{room.description}}</p>
             </div>
             <div class="border-section">
-                <h4>Amenities</h4>
+                <h4>{% trans "Amenities" %}</h4>
                 <ul class="w-full flex flex-wrap list-disc list-inside">
                 {% for a in room.amenities.all %}
                     <li class="w-1/2">{{a}}</li>
@@ -59,7 +59,7 @@
                 </ul>
             </div>
             <div class="border-section">
-                <h4>Facilities</h4>
+                <h4>{% trans "Facilities" %}</h4>
                 <ul class="w-full flex flex-wrap list-disc list-inside">
                 {% for f in room.facilities.all %}
                     <li class="w-1/2">{{f}}</li>
@@ -67,7 +67,7 @@
                 </ul>
             </div>
             <div class="border-section">
-                <h4>House Rules</h4>
+                <h4>{% trans "House Rules" %}</h4>
                 <ul class="w-full flex flex-wrap list-disc list-inside">
                 {% for h in room.house_rules.all %}
                     <li class="w-1/2">{{h}}</li>
@@ -76,7 +76,7 @@
             </div>
             <div class="border-section border-none">
                 <div class="flex items-center gap-8">
-                    <h4 class="text-2xl mb-0">Reviews</h4>
+                    <h4 class="text-2xl mb-0">{% trans "Reviews" %}</h4>
                     <ul class="flex gap-4 items-center">
                         <li>
                             <i class="fas fa-star fa-sm text-teal-700"></i>

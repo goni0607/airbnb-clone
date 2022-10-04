@@ -27,6 +27,9 @@
 }
 .c-btn-link {
     @apply w-full border border-red-900 text-center rounded-md py-3 text-white bg-red-600;
+    &.btn--small {
+        @apply py-1 px-2;
+    }
 }
 
 input, select {
