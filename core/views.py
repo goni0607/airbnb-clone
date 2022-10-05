@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
+from django.urls import reverse
 
-# Create your views here.
+
+def go_home():
+    return redirect(reverse("core:home"))

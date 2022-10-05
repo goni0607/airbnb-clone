@@ -6,6 +6,7 @@ from django.db import models
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.html import strip_tags
+from core import models as core_models
 
 
 class User(AbstractUser):
