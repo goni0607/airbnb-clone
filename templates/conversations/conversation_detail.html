@@ -21,10 +21,21 @@
             {% endfor %}
             </div>
         </div>
-        <div class="flex flex-col flex-grow border ml-8 p-6">
-            {% for message in conversation.messages.all %}
-                {% include 'mixins/conversation_message.html' with message=message %}
-            {% endfor %}
+        <div class="flex-grow border ml-8 p-4">
+            <div class="flex flex-col max-h-50vh overflow-y-auto pr-2">
+                {% for message in conversation.messages.all %}
+                    {% include 'mixins/conversation_message.html' with message=message %}
+                {% endfor %}
+            </div>
+            <div class="mt-4">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="flex">
+                        <input type="text" name="message" placeholder="Enter a message" class="flex-grow h-full" />
+                        <button type="submit" class="c-btn-full w-20 ml-1 h-full">Send</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
