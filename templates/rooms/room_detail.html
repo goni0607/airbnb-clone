@@ -7,7 +7,17 @@
 
 <div class="container max-w-7xl mx-auto pt-8">
     <div>
-        <h2 class="text-3xl font-bold">{{room.name}}</h2>
+        <div class="flex items-center">
+            <h2 class="text-3xl font-bold">{{room.name}}</h2>
+            <div class="ml-4">
+            {% on_favs room as on_favs_boolean %}
+            {% if on_favs_boolean %}
+                <a href="{% url 'lists:toggle' room.pk %}?action=remove" class="c-btn-link btn--small">Remove Favorite List</a>
+            {% else %}
+                <a href="{% url 'lists:toggle' room.pk %}?action=add" class="c-btn-link btn--small bg-teal-600">Add Favorite List</a>
+            {% endif %}
+            </div>
+        </div>
         <ul class="flex gap-4 mt-2">
             <li><i class="fas fa-star fa-sm mr-1"></i><span class="sr-only">total rating:</span>{{room.total_rating}}</li>
             <li><i class="far fa-eye fa-sm mr-1"></i><span class="sr-only">view counts:</span>{{room.reviews.count}}</li>
@@ -17,12 +27,6 @@
             <li class="text-sm border border-gray-500 rounded font-bold px-2">SUPERHOST</li>
             {% endif %}
             <li>
-                {% on_favs room as on_favs_boolean %}
-                {% if on_favs_boolean %}
-                    <a href="{% url 'lists:add' room.pk %}" class="c-btn-link btn--small">Remove Favorite List</a>
-                {% else %}
-                    <a href="{% url 'lists:add' room.pk %}" class="c-btn-link btn--small bg-teal-600">Add Favorite List</a>
-                {% endif %}
         </ul>
     </div>
 

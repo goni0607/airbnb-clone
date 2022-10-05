@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Favorite List
+{% endblock page_title %}
+
+{% block content %}
+
+    <div class="container mt-8">
+        {% include 'partials/device-line.html' with title="Your Favorite List" h_level="h2" %}
+        <div class="flex flex-wrap mt-8">
+            {% for room in user.lists.rooms.all %}
+                {% include 'partials/room_card.html' %}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}
