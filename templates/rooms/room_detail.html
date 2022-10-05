@@ -1,5 +1,5 @@
 {% extends 'base.html' %} 
-{% load i18n %}
+{% load i18n on_favs %}
 
 {% block page_title %}{{room.name}}{% endblock page_title %} 
 
@@ -16,7 +16,13 @@
             {% if room.host.is_superhost %}
             <li class="text-sm border border-gray-500 rounded font-bold px-2">SUPERHOST</li>
             {% endif %}
-            <li><a href="{% url 'lists:add' room.pk %}" class="c-btn-link btn--small">Add Favorite List</a></a>
+            <li>
+                {% on_favs room as on_favs_boolean %}
+                {% if on_favs_boolean %}
+                    <a href="{% url 'lists:add' room.pk %}" class="c-btn-link btn--small">Remove Favorite List</a>
+                {% else %}
+                    <a href="{% url 'lists:add' room.pk %}" class="c-btn-link btn--small bg-teal-600">Add Favorite List</a>
+                {% endif %}
         </ul>
     </div>
 
