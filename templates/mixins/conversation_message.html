@@ -1,0 +1,13 @@
+{% if message.user == request.user %}
+<div class="w-2/3 max-w-md mb-2 self-end text-right">
+    <span>{{message.user.first_name}}:</span>
+    <p class="bg-gray-200 p-3 rounded-lg text-left">{{message.message}}</p>
+    <span class="text-sm">{{message.created_at}}</span>
+</div>
+{% else %}
+<div class="w-2/3 max-w-md mb-2">
+    <span>{{message.user.first_name}}:</span>
+    <p class="bg-teal-600 text-white p-3 rounded-lg">{{message.message}}</p>
+    <span class="text-sm">{{message.created_at}}</span>
+</div>
+{% endif %}
